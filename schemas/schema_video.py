@@ -2,7 +2,7 @@ import datetime as _dt
 import pydantic as _pydantic
 
 class _BaseVideo(_pydantic.BaseModel):
-    link: str
+    link_to_video: str
 
 class Video(_BaseVideo):
     id: int

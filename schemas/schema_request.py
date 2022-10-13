@@ -4,7 +4,6 @@ import pydantic as _pydantic
 class _BaseRequest(_pydantic.BaseModel):
     telegram_id: str
     link_to_video: str
-    link_to_preview: str
 
 class Request(_BaseRequest):
     id: int

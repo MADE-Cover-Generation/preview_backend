@@ -5,6 +5,7 @@ class _BasePreview(_pydantic.BaseModel):
     type: str
     link_to_video: str
     s3_key: str
+    votes: int
 
 class Preview(_BasePreview):
     id: int
