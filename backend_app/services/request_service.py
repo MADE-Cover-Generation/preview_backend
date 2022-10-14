@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING, List
-from interactors.maniqa_interactor import get_Maniqa_Interactor
+#from interactors.maniqa_interactor import get_Maniqa_Interactor
 
-import models as _models
-import schemas.schema_request as _schema_request
+import backend_app.models as _models
+import backend_app.schemas.schema_request as _schema_request
 
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
@@ -26,7 +26,7 @@ async def create_request(
     db.add(video)
     db.commit()
     db.refresh(video)
-    get_Maniqa_Interactor()
+    #get_Maniqa_Interactor()
     return _schema_request.Request.from_orm(request)
 
 

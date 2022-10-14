@@ -1,12 +1,12 @@
-from importlib.resources import path
 import os
 import argparse
 from os import listdir
 from os.path import isfile, join
 import requests
+
 from loaders.uploader import Uploader
 
-base_url = "http://localhost:8000/api/preview/create/"
+base_url = "http://localhost:8008/api/preview/create/"
 base_youtube_url = "https://www.youtube.com/watch?v="
 
 def parse_args():
@@ -29,9 +29,6 @@ def find_between( s, first, last ):
         return s[start:end]
     except ValueError:
         return ""
-
-#path = "/home/kirill/Documents/final_project_dataset/test_output/"
-#type = "maniqa"
 
 def main():
     args = parse_args()

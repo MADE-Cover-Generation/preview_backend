@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING, List
 
-import models as _models
-import schemas.schema_preview as _schema_preview
-import converters
+import backend_app.models as _models
+import backend_app.schemas.schema_preview as _schema_preview
+import backend_app.converters as _converters
 
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
@@ -19,7 +19,7 @@ async def create_preview(
 
     video = db.query(_models.Video).filter(_models.Video.link_to_video == preview.link_to_video).first()
     if video == None:
-        video = converters.convert_preview_to_video(preview)
+        video = _converters.convert_preview_to_video(preview)
         db.add(video)
         db.commit()
         db.refresh(video)
@@ -51,6 +51,11 @@ async def get_preview(preview_id: int, db: "Session"):
     preview = db.query(_models.Preview).filter(_models.Preview.id == preview_id).first()
     return preview
 
+async def wipe_all_previews(db: "Session"):
+    previes = db.query(_models.Preview).all()
+    for preview in previes:
+        db.delete(preview)
+    db.commit()
 
 async def delete_preview(preview: _models.Preview, db: "Session"):
     db.delete(preview)

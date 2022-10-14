@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING, List
 
-import models as _models
-import schemas.schema_video as _schema_video
-import converters
+import backend_app.models as _models
+import backend_app.schemas.schema_video as _schema_video
+import backend_app.converters
 
 
 if TYPE_CHECKING:
@@ -28,9 +28,7 @@ async def get_random_video(
         db.add(user)
         db.commit()
         db.refresh(user)
-    print("user_add")
     watched_ids = user.watched_ids
-    print(watched_ids)
     video = db.query(_models.Video).filter(~_models.Video.link_to_video.in_(watched_ids)).first()
     if video is None:
         return None
@@ -51,6 +49,11 @@ async def get_video(video_id: int, db: "Session"):
     video = db.query(_models.Video).filter(_models.Video.id == video_id).first()
     return video
 
+async def wipe_all_videos(db: "Session"):
+    videos = db.query(_models.Video).all()
+    for video in videos:
+        db.delete(video)
+    db.commit()
 
 async def delete_video(video: _models.Video, db: "Session"):
     db.delete(video)

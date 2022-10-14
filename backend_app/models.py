@@ -1,6 +1,6 @@
 import sqlalchemy as _sql
 
-import database as _database
+import backend_app.database as _database
 
 class Video(_database.Base):
     __tablename__ = "videos"

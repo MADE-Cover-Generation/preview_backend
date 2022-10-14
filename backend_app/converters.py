@@ -1,9 +1,9 @@
-import schemas.schema_preview as _schema_preview
-import schemas.schema_user as _schema_user
+import backend_app.schemas.schema_preview as _schema_preview
+import backend_app.schemas.schema_user as _schema_user
 from sqlalchemy.dialects.postgresql import ARRAY
 import sqlalchemy as _sql
  
-import models as _models
+import backend_app.models as _models
 
 def convert_preview_to_video(preview: _schema_preview.CreatePreview):
     return _models.Video(**{'link_to_video': preview.link_to_video})
