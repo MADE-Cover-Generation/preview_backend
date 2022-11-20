@@ -7,7 +7,7 @@ import requests
 from loaders.uploader import Uploader
 
 #python3 sender_preview.py --input /home/kirill/Documents/final_project_dataset/output_random/ --type random
-base_url = "http://localhost:8008/api/preview/create/"
+base_url = "http://5.159.103.135:8008/api/preview/create/"
 base_youtube_url = "https://www.youtube.com/watch?v="
 
 def parse_args():

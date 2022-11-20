@@ -6,7 +6,7 @@ import requests
 
 from loaders.uploader import Uploader
 
-base_url = "http://localhost:8008/api/summary/create/"
+base_url = "http://5.159.103.135:8008/api/summary/create/"
 base_youtube_url = "https://www.youtube.com/watch?v="
 
 def parse_args():
