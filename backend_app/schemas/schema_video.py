@@ -6,6 +6,7 @@ class _BaseVideo(_pydantic.BaseModel):
 
 class Video(_BaseVideo):
     id: int
+    type: str
 
     class Config:
         orm_mode = True

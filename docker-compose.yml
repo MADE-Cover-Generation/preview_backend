@@ -23,6 +23,18 @@ services:
       - DATABASE_URL=f"postgresql://myuser:password@postgres/preview_database"
     depends_on:
       - postgres
+    restart: on-failure
+      
+  telegram:
+    build: ../preview-telebot/
+    command: python3 app/made_assesment_bot.py
+    volumes:
+      - .:/telebot_app
+    depends_on:
+      - postgres
+      - web
+    network_mode: host
+    restart: on-failure
 
 volumes:
   postgres_data:

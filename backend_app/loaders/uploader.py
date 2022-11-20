@@ -3,7 +3,6 @@ import os
 from dotenv import load_dotenv
 
 import boto3
-from botocore.exceptions import ClientError
 
 
 class Uploader():
@@ -18,16 +17,21 @@ class Uploader():
         )
 
 
-    def upload(self, file_path):
-        result = self.__upload(file_path)
+    def upload(self, file_path, type = "previews"):
+        result = self.__upload(type, file_path)
         return result
 
-    def __upload(self, file_path: str) -> str:
-        bucket = os.getenv('bucket_name')
+    def __upload(self, type, file_path: str) -> str:
+        if type == 'previews':
+            bucket = os.getenv('bucket_name_previews')
+        else:
+            bucket = os.getenv('bucket_name_summaries')
+        print(bucket)
         object_name = os.path.basename(file_path)
         try:
             response = self.client.upload_file(file_path, bucket, object_name)
         except Exception as e:
+            print(e)
             return None
         return object_name
 

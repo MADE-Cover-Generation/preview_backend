@@ -1,8 +1,10 @@
 from typing import TYPE_CHECKING, List
 
+import random
+
 import backend_app.models as _models
 import backend_app.schemas.schema_video as _schema_video
-import backend_app.converters
+import backend_app.converters as _converters
 
 
 if TYPE_CHECKING:
@@ -20,18 +22,19 @@ async def create_video(
 
 
 async def get_random_video(
-    telegram_id: str, db: "Session"
+    telegram_id: str, type: str, db: "Session"
 ) -> _schema_video.Video:
     user = db.query(_models.User).filter(_models.User.telegram_id == telegram_id).first()
     if user == None:
-        user = converters.convert_id_to_user(telegram_id)
+        user = _converters.convert_id_to_user(telegram_id)
         db.add(user)
         db.commit()
         db.refresh(user)
     watched_ids = user.watched_ids
-    video = db.query(_models.Video).filter(~_models.Video.link_to_video.in_(watched_ids)).first()
-    if video is None:
+    videos = db.query(_models.Video).filter((~_models.Video.link_to_video.in_(watched_ids)) & (_models.Video.type == type)).all()
+    if len(videos) == 0 :
         return None
+    video = random.choice(videos)
     return _schema_video.Video.from_orm(video)
 
 

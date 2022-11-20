@@ -21,8 +21,10 @@ async def mark_as_watched(
     telegram_id: str, link_to_url: str, db: "Session"
 ) -> _schema_user.User:
     user = db.query(_models.User).filter(_models.User.telegram_id == telegram_id).first()
+    if link_to_url == None:
+        return user
+        
     new_ids = list(user.watched_ids)
-    new_ids.append(link_to_url)
     user.watched_ids = new_ids 
     db.commit()
     db.refresh(user)
