@@ -6,8 +6,15 @@ import requests
 
 from loaders.uploader import Uploader
 
+import dotenv
+
+dotenv.load_dotenv()
+
+backend_ip = os.getenv('backend_ip')
+
+
 #python3 sender_preview.py --input /home/kirill/Documents/final_project_dataset/output_random/ --type random
-base_url = "http://5.159.103.135:8008/api/preview/create/"
+base_url = f"http://{backend_ip}:8008/api/preview/create/"
 base_youtube_url = "https://www.youtube.com/watch?v="
 
 def parse_args():

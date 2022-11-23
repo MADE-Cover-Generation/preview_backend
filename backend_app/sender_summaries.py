@@ -5,8 +5,12 @@ from os.path import isfile, join
 import requests
 
 from loaders.uploader import Uploader
+import dotenv
 
-base_url = "http://5.159.103.135:8008/api/summary/create/"
+dotenv.load_dotenv()
+
+backend_ip = os.getenv('backend_ip')
+base_url = f"http://{backend_ip}:8008/api/summary/create/"
 base_youtube_url = "https://www.youtube.com/watch?v="
 
 def parse_args():
