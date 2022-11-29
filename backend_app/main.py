@@ -156,7 +156,7 @@ async def get_requests(db: _orm.Session = _fastapi.Depends(_service_binder.get_d
     return await _request_service.get_all_requests(db=db)
 
 
-@app.get("/api/wipe_all/")
+@app.delete("/api/wipe_all/")
 async def wipe_all(master_password: str, db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
     if master_password == os.getenv('master_password'):
         await _user_service.wipe_all_users(db=db)
