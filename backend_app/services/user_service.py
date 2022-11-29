@@ -23,8 +23,8 @@ async def mark_as_watched(
     user = db.query(_models.User).filter(_models.User.telegram_id == telegram_id).first()
     new_ids = list(user.watched_ids)
     
-    if link_to_url == None or link_to_url == "null":
-        return user
+    if link_to_url == None or link_to_url == "null" or link_to_url in new_ids:
+        return None
 
     new_ids.append(link_to_url)
     user.watched_ids = new_ids 
