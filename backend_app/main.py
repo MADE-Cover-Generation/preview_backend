@@ -1,3 +1,5 @@
+import os
+
 from typing import TYPE_CHECKING, List
 import fastapi as _fastapi
 import sqlalchemy.orm as _orm
@@ -17,7 +19,9 @@ import backend_app.services.preview_service as _preview_service
 import backend_app.services.user_service as _user_service
 import backend_app.services.request_service as _request_service
 import backend_app.services.summary_service as _summary_service
+import dotenv
 
+dotenv.load_dotenv()
 
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
@@ -61,11 +65,11 @@ async def get_previews(db: _orm.Session = _fastapi.Depends(_service_binder.get_d
     return await _preview_service.get_all_previews(db=db)
 
 
-# @app.delete("/api/preview/")
-# async def wipe_all_previews(db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
-#     await _preview_service.wipe_all_previews(db=db)
-#     return "PREVIEWS ARE DELETED"
-
+@app.delete("/api/preview/")
+async def wipe_all_previews(master_password: str, db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
+    if master_password == os.getenv('master_password'):
+        await _preview_service.wipe_all_previews(db=db)
+        return "PREVIEWS ARE DELETED"
 
 
 @app.post("/api/summary/create/", response_model=_schema_summary.CreateSummary)
@@ -102,9 +106,10 @@ async def get_summaries(db: _orm.Session = _fastapi.Depends(_service_binder.get_
 
 
 @app.delete("/api/summaries/")
-async def wipe_all_summaries(db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
-    await _summary_service.wipe_all_summaries(db=db)
-    return "SUMMARIES ARE DELETED"
+async def wipe_all_summaries(master_password: str, db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
+    if master_password == os.getenv('master_password'):
+        await _summary_service.wipe_all_summaries(db=db)
+        return "SUMMARIES ARE DELETED"
 
 
 @app.get("/api/video/", response_model=List[_schema_video.Video])
@@ -113,9 +118,10 @@ async def get_videos(db: _orm.Session = _fastapi.Depends(_service_binder.get_db)
 
 
 @app.delete("/api/videos/")
-async def wipe_all_videos(db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
-    await _video_service.wipe_all_videos(db=db)
-    return "VIDEOS ARE DELETED"
+async def wipe_all_videos(master_password: str, db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
+    if master_password == os.getenv('master_password'):
+        await _video_service.wipe_all_videos(db=db)
+        return "VIDEOS ARE DELETED"
 
 
 @app.get("/api/user/", response_model=List[_schema_user.User])
@@ -124,9 +130,10 @@ async def get_users(db: _orm.Session = _fastapi.Depends(_service_binder.get_db))
 
 
 @app.delete("/api/user/")
-async def wipe_all_users(db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
-    await _user_service.wipe_all_users(db=db)
-    return "USERS ARE DELETED"
+async def wipe_all_users(master_password: str, db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
+    if master_password == os.getenv('master_password'):
+        await _user_service.wipe_all_users(db=db)
+        return "USERS ARE DELETED"
 
 
 @app.post("/api/user/mark_as_watched/")
@@ -147,3 +154,13 @@ async def create_requests(
 @app.get("/api/requests/", response_model=List[_schema_request.Request])
 async def get_requests(db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
     return await _request_service.get_all_requests(db=db)
+
+
+@app.get("/api/wipe_all/")
+async def wipe_all(master_password: str, db: _orm.Session = _fastapi.Depends(_service_binder.get_db)):
+    if master_password == os.getenv('master_password'):
+        await _user_service.wipe_all_users(db=db)
+        await _preview_service.wipe_all_previews(db=db)
+        await _video_service.wipe_all_videos(db=db)
+        await _summary_service.wipe_all_summaries(db=db)
+        
