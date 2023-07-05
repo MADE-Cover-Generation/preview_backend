@@ -1,5 +1,4 @@
 from typing import TYPE_CHECKING, List
-#from interactors.maniqa_interactor import get_Maniqa_Interactor
 
 import backend_app.models as _models
 import backend_app.schemas.schema_request as _schema_request
