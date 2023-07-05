@@ -6,11 +6,14 @@ import backend_app.models as _models
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
 
+
 def _add_tables():
     return _database.Base.metadata.create_all(bind=_database.engine)
 
+
 def _clean_tables():
     return _database.Base.metadata.drop_all(bind=_database.engine)
+
 
 def get_db():
     db = _database.SessionLocal()
