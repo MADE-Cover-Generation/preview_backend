@@ -44,7 +44,6 @@ async def get_user(user_id: int, db: "Session"):
     user = db.query(_models.User).filter(_models.User.id == user_id).first()
     return user
 
-
 async def delete_user(user: _models.User, db: "Session"):
     db.delete(user)
     db.commit()
