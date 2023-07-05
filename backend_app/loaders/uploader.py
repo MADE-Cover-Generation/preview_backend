@@ -15,12 +15,10 @@ class Uploader():
 	        aws_secret_access_key = os.getenv('aws_secret_access_key')
         )
 
-
     def upload(self, file_path, type = "previews"):
         result = self.__upload(type, file_path)
         return result
 
-	
     def __upload(self, type, file_path: str) -> str:
         if type == 'previews':
             bucket = os.getenv('bucket_name_previews')
@@ -34,4 +32,3 @@ class Uploader():
             print(e)
             return None
         return object_name
-
