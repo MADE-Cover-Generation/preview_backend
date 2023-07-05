@@ -10,6 +10,7 @@ import backend_app.converters as _converters
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
 
+
 async def create_video(
     video: _schema_video.CreateVideo, db: "Session"
 ) -> _schema_video.Video:
@@ -18,6 +19,7 @@ async def create_video(
     db.commit()
     db.refresh(video)
     return _schema_video.Video.from_orm(video)
+
 
 async def get_random_video(
     telegram_id: str, type: str, db: "Session"
@@ -35,23 +37,28 @@ async def get_random_video(
     video = random.choice(videos)
     return _schema_video.Video.from_orm(video)
 
+
 async def get_all_videos(db: "Session") -> List[_schema_video.Video]:
     videos = db.query(_models.Video).all()
     return list(map(_schema_video.Video.from_orm, videos))
 
-async def get_video(video_id: int, db: "Session"):
-    video = db.query(_models.Video).filter(_models.Video.id == video_id).first()
-    return video
 
 async def get_video(video_id: int, db: "Session"):
     video = db.query(_models.Video).filter(_models.Video.id == video_id).first()
     return video
+
+
+async def get_video(video_id: int, db: "Session"):
+    video = db.query(_models.Video).filter(_models.Video.id == video_id).first()
+    return video
+
 
 async def wipe_all_videos(db: "Session"):
     videos = db.query(_models.Video).all()
     for video in videos:
         db.delete(video)
     db.commit()
+
 
 async def delete_video(video: _models.Video, db: "Session"):
     db.delete(video)
