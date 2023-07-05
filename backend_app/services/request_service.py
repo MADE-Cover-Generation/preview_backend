@@ -7,7 +7,6 @@ import backend_app.schemas.schema_request as _schema_request
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
 
-
 async def create_request(
     request: _schema_request.CreateRequest, db: "Session"
 ) -> _schema_request.Request:
@@ -29,16 +28,13 @@ async def create_request(
     #get_Maniqa_Interactor()
     return _schema_request.Request.from_orm(request)
 
-
 async def get_all_requests(db: "Session") -> List[_schema_request.Request]:
     requests = db.query(_models.Request).all()
     return list(map(_schema_request.Request.from_orm, requests))
 
-
 async def get_request(request_id: int, db: "Session"):
     request = db.query(_models.Request).filter(_models.Request.id == request_id).first()
     return request
-
 
 async def delete_request(request: _models.Request, db: "Session"):
     db.delete(request)
