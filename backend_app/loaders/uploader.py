@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 import boto3
 
-
 class Uploader():
     def __init__(self):
 
@@ -21,6 +20,7 @@ class Uploader():
         result = self.__upload(type, file_path)
         return result
 
+	
     def __upload(self, type, file_path: str) -> str:
         if type == 'previews':
             bucket = os.getenv('bucket_name_previews')
