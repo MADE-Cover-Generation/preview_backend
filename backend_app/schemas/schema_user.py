@@ -5,7 +5,6 @@ class _BaseUser(_pydantic.BaseModel):
     telegram_id: str
     watched_ids: list
 
-
 class User(_BaseUser):
     id: int
 
