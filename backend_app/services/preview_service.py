@@ -7,7 +7,6 @@ import backend_app.converters as _converters
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
 
-
 async def create_preview(
     preview: _schema_preview.CreatePreview, db: "Session"
 ) -> _schema_preview.Preview:
@@ -26,7 +25,6 @@ async def create_preview(
 
     return _schema_preview.Preview.from_orm(preview)
 
-
 async def vote_for_preview(
     s3_key: str, db: "Session"
 ) -> _schema_preview.Preview:
@@ -36,16 +34,13 @@ async def vote_for_preview(
     db.refresh(preview)
     return _schema_preview.Preview.from_orm(preview)
 
-
 async def get_all_previews(db: "Session") -> List[_schema_preview.Preview]:
     previews = db.query(_models.Preview).all()
     return list(map(_schema_preview.Preview.from_orm, previews))
 
-
 async def get_all_previews_by_link(link_to_video: str, db: "Session") -> List[_schema_preview.Preview]:
     previews = db.query(_models.Preview).filter(_models.Preview.link_to_video == link_to_video)
     return list(map(_schema_preview.Preview.from_orm, previews))
-
 
 async def get_preview(preview_id: int, db: "Session"):
     preview = db.query(_models.Preview).filter(_models.Preview.id == preview_id).first()
