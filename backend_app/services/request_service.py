@@ -24,7 +24,6 @@ async def create_request(
     db.add(video)
     db.commit()
     db.refresh(video)
-    #get_Maniqa_Interactor()
     return _schema_request.Request.from_orm(request)
 
 async def get_all_requests(db: "Session") -> List[_schema_request.Request]:
