@@ -9,10 +9,8 @@ if TYPE_CHECKING:
 def _add_tables():
     return _database.Base.metadata.create_all(bind=_database.engine)
 
-
 def _clean_tables():
     return _database.Base.metadata.drop_all(bind=_database.engine)
-
 
 def get_db():
     db = _database.SessionLocal()
