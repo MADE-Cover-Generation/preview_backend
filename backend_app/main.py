@@ -26,11 +26,14 @@ dotenv.load_dotenv()
 if TYPE_CHECKING:
     from sqlalchemy.orm import Session
 
+
 app = _fastapi.FastAPI(title = "Backend preview")
+
 
 @app.get("/")
 def read_root():
     return {"it's": "alive"}
+
 
 @app.post("/api/preview/create/", response_model=_schema_preview.CreatePreview)
 async def create_preview(
@@ -142,6 +145,7 @@ async def mark_as_watched(
     db: _orm.Session = _fastapi.Depends(_service_binder.get_db),
 ):
     return await _user_service.mark_as_watched(user.telegram_id, user.watched_ids[0], db=db)
+
 
 @app.post("/api/requests/", response_model=_schema_request.CreateRequest)
 async def create_requests(
