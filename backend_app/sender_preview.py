@@ -9,7 +9,6 @@ from loaders.uploader import Uploader
 import dotenv
 
 dotenv.load_dotenv()
-
 backend_ip = os.getenv('backend_ip')
 
 
